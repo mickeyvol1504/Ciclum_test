@@ -1,25 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
-    photos: PropTypes.array.isRequired
+  albums: PropTypes.shape().isRequired
 };
 
 const Albums = ({ albums }) => {
-    console.log(albums);
-    return (
-        <div>
-            <h2>Albums</h2>
-            <ul className="row row_wrap row_h-between">
-                { albums.map(({ albumId, thumbnailUrl }) => (
-                    <li className="cell">
-                        <h3>Album: { albumId }</h3>
-                        <img src={ thumbnailUrl } alt="thumbnail"/>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  const allAlbumsIds = Object.keys(albums);
+
+  return (
+    <div>
+      <h2>All albums</h2>
+      <ul className="row row_column">
+        { allAlbumsIds.map(albumId => (
+          <li key={ `album_${ albumId }` }>
+            <Link className="link"  to={ `/${ albumId }` }>
+              Album #{ albumId }
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 Albums.propTypes = propTypes;
